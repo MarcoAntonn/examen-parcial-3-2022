@@ -37,6 +37,7 @@ public class ShoppingCart {
         shoppingCart.add(item);
     }
 
+    //Exceptions
     /*public void addItem(Item item) {
         if(shoppingCart.size()>0 || shoppingCart.size()<5){
             if (item.getProviderCode()!=null || item.getProviderCode()!=""){
