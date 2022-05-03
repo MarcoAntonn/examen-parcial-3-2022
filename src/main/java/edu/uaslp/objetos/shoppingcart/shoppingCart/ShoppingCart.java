@@ -33,7 +33,11 @@ public class ShoppingCart {
         return totalCost;
     }
 
-    public void addItem(Item item) {
+    public void addItem(Item item){
+        shoppingCart.add(item);
+    }
+
+    /*public void addItem(Item item) {
         if(shoppingCart.size()>0 || shoppingCart.size()<5){
             if (item.getProviderCode()!=null || item.getProviderCode()!=""){
                 shoppingCart.add(item);
@@ -45,13 +49,7 @@ public class ShoppingCart {
             throw new InvalidDataException("Quantity must be greater than zero and lower than 5");
         }
 
-        /*boolean bool = true;
-        if(item!=null){
-
-        }
-        throw new */
-
-    }
+    }*/
 
     public int getItemsCount() {
         return shoppingCart.size();
