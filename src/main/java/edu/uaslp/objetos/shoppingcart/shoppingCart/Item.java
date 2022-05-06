@@ -1,5 +1,7 @@
 package edu.uaslp.objetos.shoppingcart.shoppingCart;
 
+import edu.uaslp.objetos.shoppingcart.Exceptions.InvalidDataException;
+
 import java.math.BigDecimal;
 
 public class Item {
@@ -9,10 +11,11 @@ public class Item {
     private BigDecimal UnitCost;
 
     public Item(String itemCode, String providerCode, BigDecimal unitCost, int quantity) {
+
         this.itemCode = itemCode;
-        ProviderCode = providerCode;
-        Quantity = quantity;
-        UnitCost = unitCost;
+        this.ProviderCode = providerCode;
+        this.Quantity = quantity;
+        this.UnitCost = unitCost;
     }
 
     public Item(){

@@ -21,6 +21,10 @@ public class ShoppingCart {
     }
 
     public BigDecimal getTotalCost() {
+        if(shoppingCart.isEmpty()){
+            throw new EmptyShoppingCartException();
+        }
+
         BigDecimal totalCost = BigDecimal.ZERO;
 
         for(Item item: shoppingCart){
@@ -34,6 +38,23 @@ public class ShoppingCart {
     }
 
     public void addItem(Item item){
+        if (item.getCode() == null){
+            throw new InvalidDataException("Null or empty string not allowed for item code");
+        }if (item.getProviderCode().isEmpty()){
+            throw new InvalidDataException("Null or empty string not allowed for provider code");
+        }if (item.getUnitCost().compareTo(BigDecimal.ZERO) < 0){
+            throw new InvalidDataException("Cost must be greater than zero");
+        }if (item.getQuantity() < 1 || item.getQuantity() > 5){
+            throw new InvalidDataException("Quantity must be greater than zero and lower than 5");
+        }
+
+        for(Item existentItem: shoppingCart){
+            if(existentItem.getCode().equals(item.getCode())  &&  existentItem.getUnitCost().compareTo(item.getUnitCost())==0){
+                existentItem.setQuantity(existentItem.getQuantity()+item.getQuantity());
+                return;
+            }
+        }
+
         shoppingCart.add(item);
     }
 
@@ -43,7 +64,7 @@ public class ShoppingCart {
             if (item.getProviderCode()!=null || item.getProviderCode()!=""){
                 shoppingCart.add(item);
             }
-                throw new InvalidDataException("Null or empty string not allowed for item code");
+                throw new InvalidDataException();
 
 
         }else{
@@ -53,7 +74,11 @@ public class ShoppingCart {
     }*/
 
     public int getItemsCount() {
-        return shoppingCart.size();
+        int count=0;
+        for(Item item: shoppingCart) {
+            count+=item.getQuantity();
+        }
+        return count;
     }
 
     public List<Item> getItems() {
@@ -61,10 +86,15 @@ public class ShoppingCart {
     }
 
     public void removeItem(String itemCode1) {
-        int i;
-        for (i=0; i<shoppingCart.size(); i++){
-            if (shoppingCart.get(i).getCode() == itemCode1){
-                shoppingCart.remove(i);
+        for (Item item : shoppingCart){
+            if (item.getCode().equals(itemCode1)){
+                item.setQuantity(item.getQuantity()-1);
+
+                if (item.getQuantity()==0){
+                    shoppingCart.remove(item);
+                }
+
+                return;
             }
         }
     }
